@@ -7,9 +7,20 @@ import android.net.Uri;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.androidnetworking.interfaces.StringRequestListener;
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -46,7 +57,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    private void userControl(String userName, String pw) {
+    private void userControl(final String userName, String pw) {
         if(userName.isEmpty() || pw.isEmpty()){
             dialogAc("Kullanıcı adı veya parola boş olamaz!");
             return;
@@ -55,22 +66,46 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             dialogAc("Girilen değerler çok kısa!");
         }
         else{
-            if(userName.equals("eniserkaya") &&
-                pw.equals("asd123")){
+            AndroidNetworking.post("https://www.eniserkaya.com/mimceservis.php")
+                    .addBodyParameter("userName", userName)
+                    .addBodyParameter("pw", pw)
+                    .setPriority(Priority.MEDIUM)
+                    .build()
+                    .getAsString(new StringRequestListener() {
+                        @Override
+                        public void onResponse(String  response) {
+                            Log.i("LoginActivity",response);
+                            cevapaBak(response,userName);
+                            Toast.makeText(LoginActivity.this, ""+response, Toast.LENGTH_SHORT).show();
+                        }
+                        @Override
+                        public void onError(ANError error) {
+                            // handle error
+                            Log.e("LoginActivity",error.getMessage());
+                        }
+                    });
 
-                Bundle bundle = new Bundle();
-                bundle.putString("kullaniciAdi",userName);
-                bundle.putLong("loginTarihi",System.currentTimeMillis());
+        }
+    }
 
-                Intent intent = new Intent(this,MainActivity.class);
-                intent.putExtras(bundle);
-                //intent.putExtra("kullaniciAdi",userName); bu sekilde de data yollanabilr
-                startActivity(intent);
-            }
-            else{
-                dialogAc("Giriş Başarısız!");
-                finish();
-            }
+    private void cevapaBak(String response,String userName) {
+        Gson gson = new Gson();
+        ResponseModel responseModel = gson.fromJson(response,ResponseModel.class);
+
+       if(responseModel.getSonuc() == 1){
+
+            Bundle bundle = new Bundle();
+            bundle.putString("kullaniciAdi",userName);
+            bundle.putLong("loginTarihi",System.currentTimeMillis());
+
+            Intent intent = new Intent(this,MainActivity.class);
+            intent.putExtras(bundle);
+            //intent.putExtra("kullaniciAdi",userName); bu sekilde de data yollanabilr
+            startActivity(intent);
+        }
+        else{
+            dialogAc("Giriş Başarısız!");
+            finish();
         }
     }
 

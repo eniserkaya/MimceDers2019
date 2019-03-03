@@ -26,7 +26,8 @@
 
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="4dp"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:src="@drawable/profile"
+         />
 
     <EditText
         android:id="@+id/kullanici_pw_et_id"

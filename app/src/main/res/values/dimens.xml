@@ -2,4 +2,5 @@
 <resources>
     <dimen name="button_margin">16dp</dimen>
     <dimen name="tv_text_size">25sp</dimen>
+    <dimen name="image_margin">50dp</dimen>
 </resources>

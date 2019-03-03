@@ -11,6 +11,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button tiklaBtn;
     private TextView textYazisiTv;
+    private int temp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,12 +19,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         tiklaBtn = findViewById(R.id.first_btn_id);
+        textYazisiTv = findViewById(R.id.first_tv_id);
 
 
         tiklaBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "TIKLADIN!", Toast.LENGTH_SHORT).show();
+                temp++;
+                textYazisiTv.setText("Tıklanma Sayısı:" + temp);
             }
         });
 

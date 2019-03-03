@@ -18,6 +18,9 @@
         android:text="@string/first_button_text" />
 
     <TextView
+        android:gravity="center"
+        android:text="İlk Text"
+        android:textStyle="bold"
         android:id="@+id/first_tv_id"
         android:textSize="@dimen/tv_text_size"
         android:textColor="@android:color/white"

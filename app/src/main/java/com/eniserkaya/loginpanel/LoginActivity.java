@@ -1,5 +1,10 @@
 package com.eniserkaya.loginpanel;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -59,6 +64,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void dialogAc(String mesaj) {
-
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("DİKKAT");
+        builder.setMessage(mesaj);
+        builder.setNegativeButton("TAMAM", null);
+        builder.show();
     }
 }

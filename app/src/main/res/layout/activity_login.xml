@@ -40,4 +40,13 @@
         android:gravity="center"
         android:hint="Parola"
         android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/login_btn_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/kullanici_pw_et_id"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="22dp"
+        android:text="Giriş Yap" />
 </RelativeLayout>

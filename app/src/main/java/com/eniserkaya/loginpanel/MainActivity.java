@@ -2,6 +2,7 @@ package com.eniserkaya.loginpanel;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -11,7 +12,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     private Button tiklaBtn;
-    private TextView textYazisiTv;
+    private TextView textYazisiTv,kullaniciBilgileriTv;
     private int temp;
 
     private String kullaniciAdi;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         linearLayout = findViewById(R.id.linear_layout);
         tiklaBtn = findViewById(R.id.first_btn_id);
         textYazisiTv = findViewById(R.id.first_tv_id);
+        kullaniciBilgileriTv = findViewById(R.id.kullanici_tv_id);
 
 
 
@@ -42,8 +44,10 @@ public class MainActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if(bundle != null){
             kullaniciAdi = bundle.getString("kullaniciAdi");
+            kullaniciBilgileriTv.setText(kullaniciAdi);
             Long timestamp = bundle.getLong("loginTarihi");
-
+            String date = DateFormat.format("dd-MM-yyyy h:m:s", timestamp).toString();
+            textYazisiTv.setText(date);
         }
 
         //Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();

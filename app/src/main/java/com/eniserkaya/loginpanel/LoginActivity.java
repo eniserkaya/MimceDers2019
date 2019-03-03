@@ -11,6 +11,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.Calendar;
+import java.util.Date;
+
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText pwEt;
@@ -54,7 +57,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         else{
             if(userName.equals("eniserkaya") &&
                 pw.equals("asd123")){
-                //TODO mainSayfasıAc
+
+                Bundle bundle = new Bundle();
+                bundle.putString("kullaniciAdi",userName);
+                bundle.putLong("loginTarihi",System.currentTimeMillis());
+
+                Intent intent = new Intent(this,MainActivity.class);
+                intent.putExtras(bundle);
+                //intent.putExtra("kullaniciAdi",userName); bu sekilde de data yollanabilr
+                startActivity(intent);
             }
             else{
                 dialogAc("Giriş Başarısız!");

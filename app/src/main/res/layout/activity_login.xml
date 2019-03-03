@@ -4,25 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/ana_ekran_gradient"
     tools:context=".LoginActivity">
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/kullanici_adi_et_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="10dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name" />
+        android:gravity="center"
+        android:hint="Kullanıcı Adı"
+        android:inputType="textPersonName" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/profil_img_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/editText2"
+        android:layout_above="@id/kullanici_adi_et_id"
 
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="4dp"
         tools:srcCompat="@tools:sample/avatars" />
+
+    <EditText
+        android:id="@+id/kullanici_pw_et_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/kullanici_adi_et_id"
+        android:layout_centerHorizontal="true"
+        android:ems="10"
+
+        android:gravity="center"
+        android:hint="Parola"
+        android:inputType="textPassword" />
 </RelativeLayout>

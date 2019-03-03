@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 temp++;
-                textYazisiTv.setText("Tıklanma Sayısı:" + temp);
+                textYazisiTv.setText("Tıklanma Sayısı: "+temp);
             }
         });
 

@@ -14,6 +14,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView textYazisiTv;
     private int temp;
 
+    private String kullaniciAdi;
+    private String girisTarihi;
+
     private LinearLayout linearLayout;
 
     @Override
@@ -34,7 +37,15 @@ public class MainActivity extends AppCompatActivity {
                 textYazisiTv.setText("Tıklanma Sayısı: "+temp);
             }
         });
-        
+
+
+        Bundle bundle = getIntent().getExtras();
+        if(bundle != null){
+            kullaniciAdi = bundle.getString("kullaniciAdi");
+            Long timestamp = bundle.getLong("loginTarihi");
+
+        }
+
         //Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
     }
 

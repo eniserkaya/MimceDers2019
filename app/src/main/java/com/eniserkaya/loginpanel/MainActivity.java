@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,13 +14,17 @@ public class MainActivity extends AppCompatActivity {
     private TextView textYazisiTv;
     private int temp;
 
+    private LinearLayout linearLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        linearLayout = findViewById(R.id.linear_layout);
         tiklaBtn = findViewById(R.id.first_btn_id);
         textYazisiTv = findViewById(R.id.first_tv_id);
+
 
 
         tiklaBtn.setOnClickListener(new View.OnClickListener() {
@@ -29,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
                 textYazisiTv.setText("Tıklanma Sayısı: "+temp);
             }
         });
-
+        
         //Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
     }
 

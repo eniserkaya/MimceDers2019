@@ -42,9 +42,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         init();
+
         if(sharedPreferences.getBoolean("girisYapildiMi",false)){
             Intent intent = new Intent(this,MainActivity.class);
             startActivity(intent);
+            finish();
         }
     }
 
@@ -54,7 +56,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         userNameEt = findViewById(R.id.kullanici_adi_et_id);
         loginBtn = findViewById(R.id.login_btn_id);
         loginBtn.setOnClickListener(this);
-        sharedPreferences = this.getPreferences(Context.MODE_PRIVATE);
+        sharedPreferences = getPreferences(Context.MODE_PRIVATE);
 
     }
 
@@ -132,7 +134,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         editor.putString("userName",userName); //string değer ekleniyor
         editor.putBoolean("girisYapildiMi",true); //boolean değer ekleniyor
 
-        editor.apply(); //Kayıt
+        editor.commit(); //Kayıt
     }
 
     private void dialogAc(String mesaj) {

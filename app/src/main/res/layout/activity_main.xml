@@ -38,4 +38,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/listView"
+        tools:listitem="@layout/list_item">
+
+    </ListView>
+
 </LinearLayout>

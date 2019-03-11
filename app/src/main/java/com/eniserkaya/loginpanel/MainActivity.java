@@ -17,10 +17,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,7 +33,12 @@ public class MainActivity extends AppCompatActivity {
 
     private String kullaniciAdi;
     private String girisTarihi;
+    private CagriKaydi cagriKaydi;
 
+    private List<CagriKaydi> cagriKaydiList;
+
+
+    private ListView listView;
 
     private LinearLayout linearLayout;
 
@@ -45,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
         tiklaBtn = findViewById(R.id.first_btn_id);
         textYazisiTv = findViewById(R.id.first_tv_id);
         kullaniciBilgileriTv = findViewById(R.id.kullanici_tv_id);
+
+        listView = findViewById(R.id.listView);
+        cagriKaydiList = new ArrayList<>();
 
 
         sharedPreferences = getPreferences(Context.MODE_PRIVATE);
@@ -133,10 +144,12 @@ public class MainActivity extends AppCompatActivity {
 
         int duration = managedCursor.getColumnIndex(CallLog.Calls.DURATION);
         while (managedCursor.moveToNext()) {
+            cagriKaydi = new CagriKaydi();
             String name = managedCursor.getString(cachedName);
-
+            cagriKaydi.setArayanAdi(name);
             String id = managedCursor.getString(callerID);
             String phNumber = managedCursor.getString(number);
+            cagriKaydi.setArayanNo(phNumber);
             String callType = managedCursor.getString(type);
             String callDate = managedCursor.getString(date);
             Date callDayTime = new Date(Long.valueOf(callDate));
@@ -148,6 +161,8 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("CAGRI name:",name);
 
             int dircode = Integer.parseInt(callType);
+
+
             switch (dircode) {
                 case CallLog.Calls.OUTGOING_TYPE:
                     dir = "OUTGOING";
@@ -160,8 +175,13 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
 
+
+            cagriKaydiList.add(cagriKaydi);
         } //managedCursor.close();
         //textView.setText(sb);
+
+        CagriAdapter adapter = new CagriAdapter(this,R.layout.list_item,cagriKaydiList);
+        listView.setAdapter(adapter);
 
     }
     private void cagriKaydiOkumakIcinIzinAl() {

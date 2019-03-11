@@ -23,11 +23,7 @@ public class SmsReceiver extends BroadcastReceiver {
                     SmsMessage currentMessage = SmsMessage.createFromPdu((byte[]) aPdusObj);
                     String senderAddress = currentMessage.getDisplayOriginatingAddress();
                     String message = currentMessage.getDisplayMessageBody();
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    builder.setTitle(senderAddress);
-                    builder.setMessage(message);
-                    builder.setNegativeButton("TAMAM", null);
-                    builder.show();
+                    Log.d("GELENSMS","Gelen Message:"+message+" -- "+ senderAddress);
                 }
             }
         } catch (Exception e) {

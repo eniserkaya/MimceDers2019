@@ -1,8 +1,10 @@
 package com.eniserkaya.loginpanel;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
@@ -30,19 +33,29 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText pwEt;
     private EditText userNameEt;
     private Button loginBtn;
+    private ProgressBar progressBar;
+
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         init();
+        if(sharedPreferences.getBoolean("girisYapildiMi",false)){
+            Intent intent = new Intent(this,MainActivity.class);
+            startActivity(intent);
+        }
     }
 
     private void init() {
+        progressBar = findViewById(R.id.progressBar);
         pwEt = findViewById(R.id.kullanici_pw_et_id);
         userNameEt = findViewById(R.id.kullanici_adi_et_id);
         loginBtn = findViewById(R.id.login_btn_id);
         loginBtn.setOnClickListener(this);
+        sharedPreferences = this.getPreferences(Context.MODE_PRIVATE);
+
     }
 
     @Override
@@ -66,6 +79,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             dialogAc("Girilen değerler çok kısa!");
         }
         else{
+            progressBar.setVisibility(View.VISIBLE);
             AndroidNetworking.post("https://www.eniserkaya.com/mimceservis.php")
                     .addBodyParameter("userName", userName)
                     .addBodyParameter("pw", pw)
@@ -82,6 +96,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         public void onError(ANError error) {
                             // handle error
                             Log.e("LoginActivity",error.getMessage());
+                            progressBar.setVisibility(View.INVISIBLE);
                         }
                     });
 
@@ -94,6 +109,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
        if(responseModel.getSonuc() == 1){
 
+            girisYapildiginiKaydet(userName);
+
             Bundle bundle = new Bundle();
             bundle.putString("kullaniciAdi",userName);
             bundle.putLong("loginTarihi",System.currentTimeMillis());
@@ -102,11 +119,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             intent.putExtras(bundle);
             //intent.putExtra("kullaniciAdi",userName); bu sekilde de data yollanabilr
             startActivity(intent);
+            progressBar.setVisibility(View.INVISIBLE);
         }
         else{
             dialogAc("Giriş Başarısız!");
-            finish();
+            progressBar.setVisibility(View.INVISIBLE);
         }
+    }
+
+    private void girisYapildiginiKaydet(String userName) {
+        SharedPreferences.Editor editor = sharedPreferences.edit(); //SharedPreferences'a kayıt eklemek için editor oluşturuyoruz
+        editor.putString("userName",userName); //string değer ekleniyor
+        editor.putBoolean("girisYapildiMi",true); //boolean değer ekleniyor
+
+        editor.apply(); //Kayıt
     }
 
     private void dialogAc(String mesaj) {

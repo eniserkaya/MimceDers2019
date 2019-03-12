@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
 
     private LinearLayout linearLayout;
 
-    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +56,6 @@ public class MainActivity extends AppCompatActivity {
         listView = findViewById(R.id.listView);
         cagriKaydiList = new ArrayList<>();
 
-
-        sharedPreferences = getPreferences(Context.MODE_PRIVATE);
 
         gelenSmsiOkumakIcinIzinAl();
 
@@ -81,8 +78,7 @@ public class MainActivity extends AppCompatActivity {
             textYazisiTv.setText(date);
         }
 
-        kullaniciBilgileriTv.setText(sharedPreferences.getString("userName",""));
-        Log.d("SHARED DEGERI",sharedPreferences.getString("userName","DegerYok"));
+        kullaniciBilgileriTv.setText(SharedClass.getString("userName",this));
         //Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
 
         getCallDetails();

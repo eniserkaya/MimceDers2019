@@ -35,7 +35,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Button loginBtn;
     private ProgressBar progressBar;
 
-    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +42,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
         init();
 
-        if(sharedPreferences.getBoolean("girisYapildiMi",false)){
+        if(SharedClass.getBoolean("girisYapildiMi",this)){
             Intent intent = new Intent(this,MainActivity.class);
             startActivity(intent);
             finish();
@@ -56,7 +55,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         userNameEt = findViewById(R.id.kullanici_adi_et_id);
         loginBtn = findViewById(R.id.login_btn_id);
         loginBtn.setOnClickListener(this);
-        sharedPreferences = getPreferences(Context.MODE_PRIVATE);
 
     }
 
@@ -130,11 +128,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void girisYapildiginiKaydet(String userName) {
-        SharedPreferences.Editor editor = sharedPreferences.edit(); //SharedPreferences'a kayıt eklemek için editor oluşturuyoruz
-        editor.putString("userName",userName); //string değer ekleniyor
-        editor.putBoolean("girisYapildiMi",true); //boolean değer ekleniyor
-
-        editor.commit(); //Kayıt
+        SharedClass.setString("userName",userName,this); //string değer ekleniyor
+        SharedClass.setBoolean("girisYapildiMi",true,this); //boolean değer ekleniyorenis
     }
 
     private void dialogAc(String mesaj) {
